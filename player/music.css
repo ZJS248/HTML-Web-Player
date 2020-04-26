@@ -1,0 +1,299 @@
+*{
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+#main_player{
+    top: 1vh;
+    position: relative;
+    margin: auto;
+    width: 600px;
+    height: 400px;
+    background-color: aqua;
+    justify-content: center;
+    display: flex;
+    border: solid 1px black;
+    border-radius: 10%;
+}
+#in_player{
+    position: relative;
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: silver;
+    display: flex;
+    justify-content: center;
+}
+#img_singer{
+    position: absolute;
+    height: 80%;
+}
+#img_singer>img{
+    height: 100%;
+}
+#controls_player{
+    width: 70%;
+    height: 20%;
+    position: absolute;
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#showtime_div{
+    width: 70%;
+    height: 20%;
+    position: absolute;
+    align-self: flex-end;
+    display: flex;
+    justify-content: center;
+}
+#time_range{
+    align-self: center;
+    position: absolute;
+    margin-top: 8px;
+    outline: none; 
+    -webkit-appearance: none;/*清除系统默认样式*/  
+    width:99% !important;  
+    background: -webkit-linear-gradient(#61bd12, #61bd12) no-repeat, #ddd;  
+    background-size: 0% 100%;/*设置左右宽度比例*/  
+    height: 3px;/*横条的高度*/ 
+}
+ /*拖动块的样式*/  
+ #time_range::-webkit-slider-thumb {  
+    -webkit-appearance: none;/*清除系统默认样式*/  
+    height:16px;/*拖动块高度*/  
+    width: 16px;/*拖动块宽度*/  
+    background: #fff;/*拖动块背景*/ 
+    border-radius: 50%; /*外观设置为圆形*/  
+    border: solid 1px #ddd; /*设置边框*/  
+}
+#showtime{
+    width: 28%;
+    height: 40%;
+    position: absolute;
+    right: 1%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+.controls_img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+#last_song{
+    width: 15%;
+    height: 20%;
+    border: black solid 1px;
+    left: 0px;
+    position: absolute;
+    align-self: flex-end;
+    transform: rotate(180deg);
+    opacity: 80%;
+}
+#last_song:hover{
+    opacity: 100%;
+    border: black solid 3px;
+    border-radius: 10%;
+}
+#next_song{
+    width: 15%;
+    height: 20%;
+    border: black solid 1px;
+    right: 0px;
+    position: absolute;
+    align-self: flex-end;
+    opacity: 80%;
+}
+#next_song:hover{
+    opacity: 100%;
+    border: black solid 3px;
+    border-radius: 10%;
+}
+#song_list{
+    background-color: plum;
+    background-size: 80%;
+    position: absolute;
+    width: 80%;
+    height: 20%;
+    align-self: flex-end;
+    /* border: 1px black solid; */
+    display: flex;
+    justify-content: center;
+    border-radius: 15%;
+}
+#list_img_play{
+    position: absolute;
+    left: 0;
+    width: 15%;
+    height: 100%;
+    background-color: black;
+    /* border-right: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+#list_img_play>img{
+    z-index: 2;
+    position: absolute;
+    width: 80%;
+    height:80%;
+    border-radius: 100%;
+}
+#list_img_play>img:hover{
+    transition: 5s;
+    transform: rotateY(360deg);
+}
+#song_list_ul{
+    position: absolute;
+    list-style: none;
+    font-size: 150%;
+    color: blue;
+    align-self: center;
+}
+.list_show{
+    display: block;
+}
+#select_border{
+    background-color: black;
+    width: 15%;
+    height: 100%;
+    align-self: center;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#list_select{
+    position: absolute;
+    border-right: 30px solid transparent;
+    border-left: 30px solid transparent;
+    border-top: 60px solid white;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    visibility: visible;
+}
+#list_select:hover{
+    border-top-color: tomato;
+    transition: 5s;
+    transform: rotateY(360deg);
+}
+.song_list_list{
+    top: 100%;
+    position: absolute;
+    width: 70%;
+    height: 180%;
+    font-size: 150%;
+    color: black;
+    text-align: center;
+    overflow: auto;/*超出时增加下拉框*/
+    border: 1px solid black;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+    background-color: yellow;
+    z-index: 1;
+}
+#song_list_list>div{
+    height: 25%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#song_list_list>div:hover{
+    background-color: blue;
+}
+.song_select{
+    background-color: red;
+}
+#adjust_V{
+    z-index: 2;
+    /* border: red 1px solid; */
+    position: relative;
+    left: 15%;
+    bottom: 10%;
+    align-self: flex-end;
+    position: absolute;
+    width: 50%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+#voice{
+    left: 2%;
+    position: absolute;
+    width:11%;
+}
+#adjust_voice{
+    left: 14%;
+    position: absolute;
+    -webkit-appearance: none;
+    outline: none;
+    width: 70%;
+    height: 20%;
+    background-color: rgb(184, 164, 164);
+    display: none;
+}
+#adjust_voice::-webkit-slider-thumb {  
+    -webkit-appearance: none;/*清除系统默认样式*/  
+    height:25px;/*拖动块高度*/  
+    width: 6px;/*拖动块宽度*/  
+    background: grey;/*拖动块背景*/ 
+    border-radius: 30%; /*外观设置为圆形*/  
+    border: solid 1px #ddd; /*设置边框*/  
+}
+#voice_value{
+    right: 5%;
+    position: absolute;
+}
+#play_mode{
+    background-color: black;
+    color: blanchedalmond;
+    position: absolute;
+    align-items: flex-end;
+    left: 90%;
+}
+#word{
+    margin: auto;
+    top:20px ;
+    position: relative;
+    width: 600px;
+    height: 300px;
+    border: 1px solid black;
+}
+#word>div{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    display: none;
+}
+#word>div>div{
+    width: 100%;
+    height: 12%;
+    display: flex;
+    justify-content: center;
+}
+.word_div{
+    width: 100%;
+    height: 12%;
+    display: flex;
+    justify-content: center;
+}
+.on_word{
+    color: red;
+    font-size: x-large;
+    display: none ;
+}
+.no_display{
+    display: none !important;
+}
+.display{
+    display: block!important;
+}
