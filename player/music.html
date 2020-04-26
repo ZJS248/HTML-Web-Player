@@ -3,517 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./music.css">
-    <title>Document</title>
+    <link  rel="stylesheet" href="./music.css">
+    <title>网页播放器</title>
 </head>
-<body id="body">
+<body>
     <div id="main_player">
-        <div id="in_player">
-            <div id="img_singer">
-                <img class="no_display" src="./img/1.jpg">
-                <img class="display" src="./img/2.jpg">
-                <img class="no_display" src="./img/3.jpg">
+        <div id="player_title" >
+            <div>
+                <div id="add_songname"><span>添加歌曲名字:</span><input type="text" class="addtext" placeholder="+后缀(默认.mp3)"></div>
+                <div id="add_songimg"><span>添加歌曲图片:</span><input type="text" class="addtext" placeholder="+后缀(默认.jpg)"></div>
+                <div id="add_songlyc"><span>添加歌词:</span><input type="text" class="addtext"placeholder="[时间]歌词"></div>
+                <button id="add_songinfo" onclick="add_songinfo()">增加歌曲</button>     
+                <button id="add_songback" onclick="add_songback()">返回</button>             
             </div>
-            <div id="last_song">
-                <img class="controls_img" src="./img/qh.jpg">
-            </div>
-            <div id="adjust_V">
-                <img id="voice" src="./img/sy.jpg">
-                <div id="voice_value"></div>
-                <input type="range" id="adjust_voice" min="0" max="1" step="0.01" value="0.5">
-            </div>
-            <div id="controls_player">
-                <audio class="no_display" src="./img/毛不易 - 别再闹了.mp3"></audio>
-                <audio class="display" src="./img/薛之谦 - 丑八怪.mp3"></audio>
-                <audio class="no_display" src="./img/赵雷 - 鼓楼.mp3"></audio>
-            </div>
-            <div id="showtime_div">
-                <input id="time_range" type="range" min="0" max="9999999" step="0.01" value="0">
-                <div id="showtime">00:00/00:00</div>
-            </div>
-            <div id="next_song">
-                <img class="controls_img" src="./img/qh.jpg">
-            </div>
+            <span title="添加歌曲" onclick="Titlehidden()">我的歌单</span></div>
+        <div id="List">
+            <div id="song_list"></div>
         </div>
-        <div id="song_list">
-            <div id="list_img_play">
-                <img class="display" src="./img/zt.jpg">
-                <img class="no_display" src="./img/bf.jpg">
+        <div id="singer_img"></div>
+        <div id="controls_list">
+            <div id="songname_audio"></div>
+            <div id="song_progress"><span></span></div>
+            <div id="mode_button"></div>
+            <div id="last_button" title="上一首"><div></div></div>
+            <div id="play_button_div"title="播放" ><div class="play_button" ></div></div>
+            <div id="next_button" title="下一首"><div></div></div>
+            <div id="voice_button_div" title="音量"><div id="voice_button"></div>
+                <div id="voice_range_border">
+                    <span id="voice_value">0</span>
+                    <input type="range" min="0" max="1" id="voice_range" value="0.4" step="0.01" onclick="voice_adjust()">
+                </div>
             </div>
-            <div id="select_border">
-                <div id="list_select"></div>
+            <div id="progress_bar">
+                <input type="range" min="0" max="400" id="song_range" value="0" step="1" onclick="time_adjust()">
             </div>
-            <ul id="song_list_ul">
-                <li id="song_name" class="list_show">薛之谦 - 丑八怪</li>
-            </ul>
-            <div id="song_list_list" class="no_display">
-                <div id="song_01" onclick="select(song_01)">毛不易 - 别再闹了</div>
-                <div id="song_02" onclick="select(song_02)" class="song_select">薛之谦 - 丑八怪</div>
-                <div id="song_03" onclick="select(song_03)" >赵雷 - 鼓楼(歌词文本时间不对)</div>
-            </div>
-        </div>
-        <div>
-            <select id="play_mode">
-                <option id="op1">单曲循环</option>
-                <option id="op2">顺序播放</option>
-                <option id="op3">随机播放</option>
-            </select>
         </div>
     </div>
-    <div id="word">
-        <div id="word_bznl">
-        </div>
-        <div id="word_cbg" class="display">
-        </div>
-        <div id="word_gl">
-        </div>
-    </div>
-    <div id="word2">
-        <div id="songword_bznl" >
-            <textarea hidden>
-                [00:00.00]《别再闹了》
-                [00:03.00]演唱：毛不易
-                [00:06.00]作词/作曲：小柯
-                [00:09.00]歌词编辑：孟德良
-                [00:12.00]2019年01月07日
-                [00:15.00]
-                [00:16.80]我们聊些 有趣的事情
-                [00:20.85]别把气氛弄的 如此低沉
-                [00:25.31]我知道 这几天你心烦
-                [00:29.76]每个人的活 都不简单
-                [00:32.49]
-                [00:33.19]我知道 如果把你换做我
-                [00:37.93]我也会冲动 也会不安
-                [00:41.83]即使天塌了 还有我在身边
-                [00:46.59]没有什么 不解的难
-                [00:50.54]
-                [00:51.24]外面纷纷扰扰 里面乱乱糟糟
-                [00:55.05]我们别再闹了
-                [00:58.55]这个冬天 已然很冷了
-                [01:02.74]我们靠在一起 好吗
-                [01:07.03](Music)
-                [01:21.92]我们聊些 有趣的事情
-                [01:26.05]别把气氛弄的 如此低沉
-                [01:30.51]我知道 这几天你心烦
-                [01:34.96]每个人的活 都不简单
-                [01:39.03]
-                [01:39.73]外面纷纷扰扰 里面乱乱糟糟
-                [01:43.38]我们别再闹了
-                [01:47.08]现实生活 本来已很累了
-                [01:51.54]把你的手给我吧
-                [01:55.90]
-                [01:56.60]外面纷纷扰扰 里面乱乱糟糟
-                [02:00.18]我们别再闹了
-                [02:03.83]这个冬天 已然很冷了
-                [02:08.17]我们靠在一起 好吗
-                [02:13.35](Music)
-                [02:28.32]外面纷纷扰扰 里面乱乱糟糟
-                [02:31.70]我们别再闹了
-                [02:35.41]这个冬天 已然很冷了
-                [02:39.70]我们靠在一起 好吗
-                [02:44.24]
-                [02:44.94]外面纷纷扰扰 里面乱乱糟糟
-                [02:48.56]我们别再闹了
-                [02:52.27]现实生活 本来已很累了
-                [02:56.79]把你的手给我吧
-                [03:00.04]
-                [03:00.74]这个冬天 已然很冷了
-                [03:05.05]我们靠在一起 好吗
-            </textarea>
-        </div>
-        <div id="songword_cbg" class="display">
-            <textarea hidden>
-                [00:00.63]丑八怪 - 薛之谦
-                [00:03.13]作词：甘世佳
-                [00:05.32]作曲：李荣浩 
-                [00:16.98]
-                [00:20.26]如果世界漆黑 其实我很美
-                [00:23.88]在爱情里面进退 最多被消费
-                [00:27.70]不管同样的是非
-                [00:29.69]又怎么不对 无所谓
-                [00:35.69]如果像你一样 总有人谄媚
-                [00:39.32]围绕着我的卑微 也许能消退
-                [00:43.32]其实我并不在意 有很多机会
-                [00:46.69]像巨人一样的无畏
-                [00:49.51]放纵我心里的鬼
-                [00:51.20]可是我不配
-                [00:54.46]丑八怪 能否别把灯打开
-                [01:02.21]我要的爱 出没在漆黑一片的舞台
-                [01:09.46]丑八怪 在这暧昧的时代
-                [01:17.58]我的存在 像意外
-                [01:24.48]
-                [01:37.79]有人用一滴泪 会红颜祸水
-                [01:41.35]有人丢掉称谓 什么也不会
-                [01:45.29]只要你足够虚伪
-                [01:47.10]就不怕魔鬼 对不对
-                [01:53.05]如果剧本写好 谁比谁高贵
-                [01:56.74]我只能沉默以对 美丽本无罪
-                [02:00.63]当欲望开始贪杯 有更多机会
-                [02:04.07]像尘埃一样的无畏
-                [02:06.89]化成灰谁认得谁管他配不配
-                [02:08.65]
-                [02:11.96]丑八怪 能否别把灯打开
-                [02:19.52]我要的爱 出没在漆黑一片的舞台
-                [02:26.83]丑八怪 在这暧昧的时代
-                [02:34.96]我的存在 不意外
-                [02:42.33]
-                [03:01.96]丑八怪 其实见多就不怪
-                [03:09.96]放肆去high 用力踩
-                [03:14.15]那不堪一击的洁白
-                [03:17.21]丑八怪 这是我们的时代
-                [03:25.48]我不存在 才意外                
-            </textarea>
-        </div>
-        <div id="songword_gl">
-            <textarea hidden>
-                [00:00.40]赵雷 - 鼓楼
-                [00:01.06]作词：赵雷
-                [00:01.26]作曲：赵雷
-                [00:01.46]编曲：赵雷、喜子
-                [00:01.81]制作人：赵雷、喜子、姜北生
-                [00:02.31]贝斯：张岭
-                [00:02.51]鼓：贝贝
-                [00:02.66]电琴：喜子
-                [00:02.86]箱琴：赵雷
-                [00:03.06]口琴：赵雷
-                [00:03.26]MIDI：喜子
-                [00:03.46]和声：赵雷、孙嫣然、唐宁
-                [00:26.14]我走在鼓楼下面
-                [00:31.66]路在堵着
-                [00:34.28]雨后的阳光散落
-                [00:38.56]人们都出来了
-                [00:42.36]执着的迷惘的
-                [00:47.79]文艺青年很多
-                [00:50.39]如果我无聊了就会来这里坐坐
-                [00:58.39]我是个沉默不语的靠着墙壁
-                [01:03.49]晒太阳的过客
-                [01:06.48]如果我有些倦意了
-                [01:09.98]就让我在这里独自醒过
-                [01:15.18]我站在鼓楼上面
-                [01:19.29]一切繁华与我无关
-                [01:23.19]这是个拥挤的地方
-                [01:27.26]而我却很平凡
-                [01:47.28]我走在鼓楼下面
-                [01:53.08]淋湿的咖啡馆
-                [01:55.29]睡不着的后海边
-                [01:58.99]月亮还在抽着烟
-                [02:03.49]喝醉的亲吻着
-                [02:09.05]快活的人不眠
-                [02:11.61]唯有我倚着围栏
-                [02:15.06]对过往说晚安
-                [02:21.51]晚安
-                [02:52.39]我是个沉默不语的靠着车窗
-                [02:57.39]想念你的乘客
-                [03:00.25]当一零七路再次经过
-                [03:04.35]时间是带走青春的电车
-                [03:09.08]我站在什刹海边
-                [03:13.14]一切甜蜜与我无关
-                [03:17.04]这是个拥挤的地方
-                [03:21.14]而我却很孤单
-                [03:24.65]我在鼓楼
-                [03:28.85]我在鼓楼
-                [03:32.80]我在鼓楼
-                [03:40.86]我在鼓楼
-                [03:45.12]我在鼓楼
-                [03:49.02]我在鼓楼
-            </textarea>
-        </div>
+    <div id="lyrics_main_div"></div> 
+    <div id="lyrics_text">
+        <textarea id="毛不易 - 别再闹了" hidden>[00:00.00]《别再闹了》
+            [00:03.00]演唱：毛不易
+            [00:06.00]作词/作曲：小柯
+            [00:09.00]歌词编辑：孟德良
+            [00:12.00]2019年01月07日
+            [00:15.00]
+            [00:16.80]我们聊些 有趣的事情
+            [00:20.85]别把气氛弄的 如此低沉
+            [00:25.31]我知道 这几天你心烦
+            [00:29.76]每个人的活 都不简单
+            [00:32.49]
+            [00:33.19]我知道 如果把你换做我
+            [00:37.93]我也会冲动 也会不安
+            [00:41.83]即使天塌了 还有我在身边
+            [00:46.59]没有什么 不解的难
+            [00:50.54]
+            [00:51.24]外面纷纷扰扰 里面乱乱糟糟
+            [00:55.05]我们别再闹了
+            [00:58.55]这个冬天 已然很冷了
+            [01:02.74]我们靠在一起 好吗
+            [01:07.03](Music)
+            [01:21.92]我们聊些 有趣的事情
+            [01:26.05]别把气氛弄的 如此低沉
+            [01:30.51]我知道 这几天你心烦
+            [01:34.96]每个人的活 都不简单
+            [01:39.03]
+            [01:39.73]外面纷纷扰扰 里面乱乱糟糟
+            [01:43.38]我们别再闹了
+            [01:47.08]现实生活 本来已很累了
+            [01:51.54]把你的手给我吧
+            [01:55.90]
+            [01:56.60]外面纷纷扰扰 里面乱乱糟糟
+            [02:00.18]我们别再闹了
+            [02:03.83]这个冬天 已然很冷了
+            [02:08.17]我们靠在一起 好吗
+            [02:13.35](Music)
+            [02:28.32]外面纷纷扰扰 里面乱乱糟糟
+            [02:31.70]我们别再闹了
+            [02:35.41]这个冬天 已然很冷了
+            [02:39.70]我们靠在一起 好吗
+            [02:44.24]
+            [02:44.94]外面纷纷扰扰 里面乱乱糟糟
+            [02:48.56]我们别再闹了
+            [02:52.27]现实生活 本来已很累了
+            [02:56.79]把你的手给我吧
+            [03:00.04]
+            [03:00.74]这个冬天 已然很冷了
+            [03:05.05]我们靠在一起 好吗</textarea>
+        <textarea id="薛之谦 - 丑八怪" hidden>[00:00.63]丑八怪 - 薛之谦
+            [00:03.13]作词：甘世佳
+            [00:05.32]作曲：李荣浩 
+            [00:16.98]
+            [00:20.26]如果世界漆黑 其实我很美
+            [00:23.88]在爱情里面进退 最多被消费
+            [00:27.70]不管同样的是非
+            [00:29.69]又怎么不对 无所谓
+            [00:35.69]如果像你一样 总有人谄媚
+            [00:39.32]围绕着我的卑微 也许能消退
+            [00:43.32]其实我并不在意 有很多机会
+            [00:46.69]像巨人一样的无畏
+            [00:49.51]放纵我心里的鬼
+            [00:51.20]可是我不配
+            [00:54.46]丑八怪 能否别把灯打开
+            [01:02.21]我要的爱 出没在漆黑一片的舞台
+            [01:09.46]丑八怪 在这暧昧的时代
+            [01:17.58]我的存在 像意外
+            [01:24.48]
+            [01:37.79]有人用一滴泪 会红颜祸水
+            [01:41.35]有人丢掉称谓 什么也不会
+            [01:45.29]只要你足够虚伪
+            [01:47.10]就不怕魔鬼 对不对
+            [01:53.05]如果剧本写好 谁比谁高贵
+            [01:56.74]我只能沉默以对 美丽本无罪
+            [02:00.63]当欲望开始贪杯 有更多机会
+            [02:04.07]像尘埃一样的无畏
+            [02:06.89]化成灰谁认得谁管他配不配
+            [02:08.65]
+            [02:11.96]丑八怪 能否别把灯打开
+            [02:19.52]我要的爱 出没在漆黑一片的舞台
+            [02:26.83]丑八怪 在这暧昧的时代
+            [02:34.96]我的存在 不意外
+            [02:42.33]
+            [03:01.96]丑八怪 其实见多就不怪
+            [03:09.96]放肆去high 用力踩
+            [03:14.15]那不堪一击的洁白
+            [03:17.21]丑八怪 这是我们的时代
+            [03:25.48]我不存在 才意外</textarea>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-    let timead,word_roll;
-    window.onload= function(){                                                                       //初始化
-        let song=document.querySelector("#controls_player>audio.display");
-        song.volume=document.getElementById("adjust_voice").value;  
-        word_part();
+    //如要增加歌曲，只需往根目录添加 MP3 文件后，在song_info处增加歌曲的名字，歌手图片的名字，歌词 textarea 的id需要与歌曲名字相同
+    const song_info={
+        song_name:["毛不易 - 别再闹了.mp3","薛之谦 - 丑八怪.mp3","赵雷 - 鼓楼.mp3","骆集益 - 玉满堂.mp3"],
+        songimg_name:["毛不易 - 别再闹了.jpg","薛之谦 - 丑八怪.jpg","赵雷 - 鼓楼.jpg"],
+        songlrc_id:["毛不易 - 别再闹了","薛之谦 - 丑八怪","赵雷 - 鼓楼","骆集益 - 玉满堂"]
+    };
+    //歌曲目录
+    let songnum=0,progresstime,lyrics_progress;
+    window.onload= function(){
+        songnamelist(song_info.song_name);
+        songload();
+        add_song_img();
+        voice_adjust();
+        Lyrics_load();
+        document.querySelector("#songname_audio>div.display>audio").addEventListener("canplaythrough",progress);
     }
-    start();
-    function next_song() {                                                                  //下一首
-        stopplay();
-        let song=document.querySelector("#controls_player>audio.display")
-        let singer=document.querySelector("#img_singer>img.display")
-        let info=document.querySelector("#song_list_list>div.song_select")
-        let songword=document.querySelector("#word>div.display");
-        let wordlyc=document.querySelector("#word2>div.display");
-        if(song.nextElementSibling){
-            song.nextElementSibling.className="display";
-            singer.nextElementSibling.className="display";
-            info.nextElementSibling.className="song_select";
-            songword.nextElementSibling.className="display"
-            wordlyc.nextElementSibling.className="display"
-            document.getElementById("song_name").innerHTML=info.nextElementSibling.innerHTML;
-        }else{
-            document.querySelector('#controls_player>audio:first-child').className="display"
-            document.querySelector('#img_singer>img:first-child').className="display"
-            document.querySelector('#song_list_list>div:first-child').className="song_select";
-            document.querySelector("#word>div:first-child").className="display";
-            document.querySelector("#word2>div:first-child").className="display"
-            document.getElementById("song_name").innerHTML=document.querySelector('#song_list_list>div:first-child').innerHTML;
+    function songnamelist(arr){                                                                            //增加歌曲列表
+        for(let i=0;i<arr.length;i++){
+            let songname_div=document.createElement("div");
+            let songname_span=document.createElement("span")
+            let songname_text=document.createTextNode(arr[i].slice(0,arr[i].indexOf(".")))
+            songname_span.appendChild(songname_text);
+            songname_div.appendChild(songname_span);
+            songname_div.onclick=function(){song_select(this)};
+            document.getElementById("song_list").appendChild(songname_div);
         }
-        wordlyc.className="no_display"
-        songword.className="no_display"
-        song.className="no_display";
-        singer.className='no_display';
-        info.className=""; 
-        cleartime();
     }
-    function last_song(){                                                               //上一首
-        stopplay();
-        let singer=document.querySelector("#img_singer>img.display");
-        let song=document.querySelector("#controls_player>audio.display");
-        let info=document.querySelector("#song_list_list>div.song_select");
-        let songword=document.querySelector("#word>div.display");
-        let wordlyc=document.querySelector("#word2>div.display");
-        if(song.previousElementSibling){
-            song.previousElementSibling.className="display";
-            singer.previousElementSibling.className="display";
-            info.previousElementSibling.className="song_select"
-            songword.previousElementSibling.className="display"
-            wordlyc.previousElementSibling.className="display"
-            document.getElementById("song_name").innerHTML=info.previousElementSibling.innerHTML;
+    function songload(){                                                                         //载入歌曲文件
+        let songname_div=document.createElement("div");
+        let song_audio=document.createElement("audio");
+        try{
+            song_audio.src="./img/"+song_info.song_name[songnum]+"";
+        }catch(e){console.log(e)}
+        songname_div.appendChild(song_audio);
+        songname_div.className="display";
+        document.getElementById("songname_audio").appendChild(songname_div);
+        document.getElementById("song_list").childNodes[songnum].className="song_playing"
+    }
+    function add_song_img(){                                                                       //载入歌手图片
+            let songname_div=document.createElement("div")
+            let song_img=document.createElement("img");
+            try{song_img.src="./img/"+song_info.songimg_name[songnum]+"";
+                if(song_img.src.indexOf("undefined")>0||song_info.songimg_name[songnum].length<4) {throw new Error("Error")}
+                document.getElementById("singer_img").innerHTML="";
+            }catch(e){
+                song_img.src="./img/unknow-img.jpg";
+                document.getElementById("singer_img").innerHTML="没有找到图片"
+            }
+            song_img.className="song_img";
+            song_img.alt="没有找到图片"
+            songname_div.appendChild(song_img);
+            songname_div.className="song_img_div"
+            document.getElementById("singer_img").appendChild(songname_div);
+    }
+    function Titlehidden(){
+        document.querySelector("#player_title>div").style="display:block";
+        document.querySelector("#player_title>span").style="display:none";
+    }
+    function add_songback(){
+        document.querySelector("#player_title>div").style="display:none";
+        document.querySelector("#player_title>span").style="display:block";
+    }
+    function add_songinfo(){                                                                        //增加歌曲
+        let info= document.getElementsByClassName("addtext");
+        const obj_info={
+            song_name:"",
+            songimg_name:"",
+        };
+        obj_info.song_name=(info[0].value);
+        obj_info.songimg_name=(info[1].value);
+        try{if(obj_info.song_name==""){throw ("请输入歌曲名字")}}catch(e){alert(e);return;}
+        if(obj_info.song_name.indexOf(".")<0){
+            obj_info.song_name=obj_info.song_name+".mp3"
+        }            
+        if(obj_info.songimg_name.indexOf(".")<0&obj_info.songimg_name.length>0){obj_info.songimg_name=obj_info.songimg_name+".jpg"};
+        song_info.song_name.push((obj_info.song_name));
+        song_info.songimg_name[song_info.song_name.length-1]=(obj_info.songimg_name)
+        song_info.songlrc_id[song_info.song_name.length-1]=(obj_info.song_name).slice(0,obj_info.song_name.indexOf("."));
+        let arr=[obj_info.song_name];
+        songnamelist(arr);
+        //处理歌词
+        if(info[2].value==""){return;}
+        let songlrc=document.createElement("textarea");
+        songlrc.innerHTML=info[2].value;
+        songlrc.hidden=true;
+        songlrc.id=song_info.songlrc_id[song_info.song_name.length-1];
+        document.getElementById("lyrics_text").appendChild(songlrc);
+    }
+    function last_song(){                                                                               //上一首歌
+        let songname=document.querySelector("#songname_audio>div.display");
+        let song_img=document.querySelector("#singer_img>div.song_img_div");
+        let song_playing=document.querySelector("#song_list>div.song_playing");
+        document.getElementById("songname_audio").removeChild(songname);
+        document.getElementById("singer_img").removeChild(song_img);
+        if(songnum>0){
+            songnum=songnum-1;
+            songload();
+            add_song_img();
+            song_playing.previousSibling.className="song_playing"
+        }else if(songnum==0){
+            songnum=song_info.song_name.length-1;
+            songload();
+            add_song_img();
+            document.querySelector("#song_list>div:last-child").className="song_playing"
         }
-        else{
-            document.querySelector("#controls_player>audio:last-child").className="display";
-            document.querySelector("#img_singer>img:last-child").className="display";
-            document.querySelector('#song_list_list>div:last-child').className="song_select";
-            document.querySelector("#word>div:last-child").className="display";
-            document.querySelector("#word2>div:last-child").className="display"
-            document.getElementById("song_name").innerHTML=document.querySelector('#song_list_list>div:last-child').innerHTML;
+        song_playing.className="";
+        clearAll();
+    }
+    function next_song(){                                                                              //下一首歌
+        let songname=document.querySelector("#songname_audio>div.display");
+        let song_img=document.querySelector("#singer_img>div.song_img_div");
+        let song_playing=document.querySelector("#song_list>div.song_playing");
+        document.getElementById("songname_audio").removeChild(songname);
+        document.getElementById("singer_img").removeChild(song_img);
+        if(songnum<song_info.song_name.length-1){
+            songnum=songnum+1;
+            songload();
+            add_song_img();
+            song_playing.nextSibling.className="song_playing"
+        }else if(songnum==song_info.song_name.length-1){
+            songnum=0;
+            songload();
+            add_song_img();
+            document.querySelector("#song_list>div:first-child").className="song_playing"
         }
-        wordlyc.className="no_display"
-        songword.className="no_display"
-        song.className="no_display";
-        singer.className='no_display'
-        info.className="";
-        cleartime();
+        song_playing.className="";
+        clearAll();
     }
-    function select(obj){                                                       //下拉列表选择播放歌曲
-        stopplay();
-        let singer=document.querySelector("#img_singer>img.display");
-        let song=document.querySelector("#controls_player>audio.display");
-        let info=document.querySelector("#song_list_list>div.song_select");
-        let songword=document.querySelector("#word>div.display");
-        let wordlyc=document.querySelector("#word2>div.display");
-        songword.className="no_display"
-        singer.className="no_display";
-        song.className="no_display";
-        info.className=""
-        wordlyc.className="no_display"
-        let songnum=obj.id.slice(5);
-        let songid="song_"+songnum;
-        let selectsong=document.getElementById("controls_player").childNodes[2*songnum-1];
-        let selectimg=document.getElementById("img_singer").childNodes[2*songnum-1];
-        let selectword=document.getElementById("word").childNodes[2*songnum-1];
-        let songlyc=document.getElementById("word2").childNodes[2*songnum-1];
-        selectimg.className="display"
-        selectsong.className="display";
-        obj.className="song_select";
-        selectword.className="display";
-        songlyc.className="display"
-        document.getElementById(songid).className="song_select";
-        document.getElementById("song_name").innerHTML=document.getElementById(songid).innerHTML;  
-        document.getElementById("song_list_list").className="no_display";
-        cleartime();
-    }
-    function songplay(){                                                        //音乐播放与暂停
-        let song=document.querySelector("#controls_player>audio.display");
-        let playsong=document.querySelector("#list_img_play>img.display");
-        if(playsong.src.indexOf("zt.jpg")>0){
-            song.play();
-            if(song.play()){
-                song.play().then(()=>{
-                    setTimeout(()=>{
-                        console.log("play");
-                        timead=setInterval(function(){timeadjust()},1000);
-                        word_roll=setInterval(rollword,1000); 
-                    },1000);
-                    }).catch((e)=>{
-                        console.log("wait for a while");
-                    });
-                }
-        }else{
-            console.log("stop");
-            clearInterval(timead);
-            clearInterval(word_roll);
-            song.pause(); 
+    function song_select(obj){                                                                      //列表选择歌曲
+        let songname=document.querySelector("#songname_audio>div.display");
+        let song_img=document.querySelector("#singer_img>div.song_img_div");
+        document.getElementById("songname_audio").removeChild(songname);
+        document.getElementById("singer_img").removeChild(song_img);
+        document.getElementById("song_list").childNodes[songnum].className=""
+        for(let i=0;i<song_info.song_name.length;i++){
+            if(obj==song_list.childNodes[i]){
+                songnum=i;
+                songload();
+                add_song_img();
+                obj.className="song_playing";
+            }
         }
-        document.querySelector("#list_img_play>img.no_display").className="display"
-        playsong.className="no_display"
+        clearAll();
     }
-    function voice_adjust(){                                                   //音量调节
-        let song=document.querySelector("#controls_player>audio.display");
-        song.volume=document.getElementById("adjust_voice").value;
-        document.getElementById("voice_value").innerHTML=(song.volume*100).toFixed(0);
-    }
-  
-    window.onkeydown=function(event){                                            //键盘控制音量     //onkeydowm支持所有按键;onkeypress不支持功能键
-        let v_value=document.getElementById("adjust_voice").value;                            
-        if(event.keyCode==38){
-            document.getElementById("adjust_voice").value=(v_value*1)+0.01;
-        }else if(event.keyCode==40){
-            document.getElementById("adjust_voice").value=(v_value*1)-0.01;
+    function clearAll(){                                                                                //切换歌曲时重置信息
+        let button=document.getElementById("play_button_div").childNodes[0];
+        let audio=document.querySelector("#songname_audio>div.display").childNodes[0];
+        if(button.className=="play_button"){
+            audio.pause();
+        }else if(button.className=="stop_button"){
+            audio.play();
         }
         voice_adjust();
+        setTimeout(progress,100);
+        let song_lyrics=document.getElementById("lyrics_main_div").childNodes;
+        document.getElementById("lyrics_main_div").removeChild(song_lyrics[0]);
+        Lyrics_load();
     }
-    function no_adjust(){                                                    //音量进度条显示与否
-        let show=document.getElementById("adjust_voice");
-        document.getElementById("voice_value").innerHTML=(show.value*100).toFixed(0);
-        if(show.style.display=='block'){
-            show.style.display='none';
-            document.getElementById("voice_value").style.display="none";
-        }else{
-            show.style.display="block";
-            document.getElementById("voice_value").style.display="block";
+    function playbutton(){                                                                           //播放与暂停按钮
+          let button=document.getElementById("play_button_div").childNodes[0];
+          let audio=document.querySelector("#songname_audio>div.display").childNodes[0];
+          if(button.className=="play_button"){
+              audio.play();
+              button.className="stop_button";
+              document.getElementById("play_button_div").title="暂停"
+              progresstime=setInterval(progress,1000);
+              lyrics_progress=setInterval(Lyrics_roll,1000);
+          }else if(button.className=="stop_button"){
+                button.className="play_button";
+                document.getElementById("play_button_div").title="播放"
+                setTimeout(audio.pause(),100);
+                clearInterval(progresstime);
+                clearInterval(lyrics_progress);
+          }
+    }
+    function visibility_voice_bar(){                                                              //音量条的显示与否
+          let voice_bar=document.getElementById("voice_range_border")
+          if(voice_bar.style.display=="flex"){
+              voice_bar.style.display="none"
+          }else{
+              voice_bar.style.display="flex"
+          } 
+    }
+    function voice_adjust(){                                                                      //音量调节
+        let audio=document.querySelector("#songname_audio>div.display").childNodes[0];
+        let value=document.getElementById("voice_value")
+        let volume_range=document.getElementById("voice_range");
+        audio.volume=volume_range.value;
+        value.innerHTML=parseInt(volume_range.value*100);
+        volume_range.style="background-size:"+volume_range.value*100+"%";
+    }
+    const song_name=document.querySelector("#songname_audio");
+    function progress(){                                                                        //歌曲进度
+        let audio=document.querySelector("#songname_audio>div.display").childNodes[0];
+        let cutmin=timedata(parseInt(audio.currentTime/60));
+        let cutsec=timedata(parseInt(audio.currentTime%60));
+        let durmin=timedata(parseInt(audio.duration/60));
+        let dursec=timedata(parseInt(audio.duration%60));
+        document.getElementById("song_range").value=audio.currentTime;
+        document.getElementById("song_range").max=audio.duration;
+        document.getElementById("song_range").style="background-size: "+(audio.currentTime/audio.duration)*100+"%;"
+        document.getElementById("song_progress").childNodes[0].innerHTML=cutmin+":"+cutsec+"/"+durmin+":"+dursec;
+        if(audio.currentTime>=audio.duration){
+            next_song();
         }
-    }
-    function timeadjust(){                                                  //播放时间显示
-        let audio=document.querySelector("#controls_player>audio.display");
-        let adjust=document.getElementById("time_range");
-        let cut=audio.currentTime;
-        let dur=audio.duration;
-        adjust.value=cut;
-        let per=((adjust.value/audio.duration).toFixed(4)*100+"%");
-        adjust.style='background-size:'+per+' 100%'
-        let cutMin=parseInt(cut/60);
-        let cutSed=parseInt(cut%60);
-        let durMin=parseInt(dur/60);
-        let durSed=parseInt(dur%60);
-        document.getElementById("time_range").max=dur;
-        document.getElementById("showtime").innerHTML=timedata(cutMin)+":"+timedata(cutSed)+"/"+timedata(durMin)+":"+timedata(durSed);
-        setTimeout(function(){                                                                                                      //播放结束下一首
-            if(audio.currentTime>=document.getElementById("time_range").max){
-                if(document.querySelector("#list_img_play>img.display").src.indexOf("bf.jpg")>0){
-                    Play_Mode()
-                }
-            }},100)
-    }   
-    function line_adjust(){                                                 //歌曲进度条调整
-        let audio=document.querySelector("#controls_player>audio.display");
-        let adjust=document.getElementById("time_range");
-        audio.currentTime=adjust.value;
-        timeadjust();
-    }
-    function cleartime(){                                                  //切换歌曲时重置
-        let audio=document.querySelector("#controls_player>audio.display");
-        audio.currentTime=0;
-        document.getElementById("adjust_voice").style.display="none";
-        document.getElementById("voice_value").style.display="none";
-        voice_adjust();
-        timeadjust();
-        word_part();
-        songplay();
-    }
-    function timedata(num){                                               //设置时间格式 
+    }          
+    function timedata(num){                                                                      //设置时间格式 
         if(num<10){
             num="0"+num;
-        }else{
-            return num;
         }
         return num;
     }
-    function Play_Mode(){                                                   //播放模式
-        let mode=document.getElementById('play_mode').value;
-        let audio=document.querySelector("#controls_player>audio.display");
-        if(mode=='单曲循环'){
-            cleartime();
-            songplay();
-        }else if(mode=='顺序播放'){
-            next_song();
-        }else if(mode=="随机播放"){
-            cleartime();
-            let songnum=document.getElementById("controls_player").childNodes.length;
-            let num=((Math.random()*20)/(songnum-1)).toFixed(0);
-            console.log(num)
-            for(let i=0;i<=num;i++){
-                next_song();
-            }
-
-        } 
-    }
-    function word_part(){                                                                                   //添加歌词
-        let word=document.querySelector("#word2>div.display").childNodes[1].textContent;
-        word=word.split(/\n/g);
-        word=word.filter(function(value){
-            if(value.indexOf("[")>0){
-                return value;
-            }
-        })
-        let arr1=[];
-        let arr2=[];
-        for(let i=0;i<word.length;i++){
-            arr1.push(word[i].slice(word[i].indexOf("[")+1,word[i].indexOf("]")));
-            arr2.push(word[i].slice(word[i].indexOf("]")+1));
+    function time_adjust(){                                                             //滑动进度条设置歌曲进度
+        let audio=document.querySelector("#songname_audio>div.display").childNodes[0];
+        audio.currentTime=document.getElementById("song_range").value;
+        progress();
+    }    
+    function Lyrics_load(){ 
+        let lyrics_txt;                                                                 //载入歌词
+        try{
+            lyrics_txt=document.getElementById(""+song_info.songlrc_id[songnum]+"").innerHTML;
+            lyrics_txt=lyrics_txt.split(/[[]/);
+        }catch(e){
+            lyrics_txt=["没有找到歌词"];
         }
-        for(let i=0;i<=arr1.length-1;i++){
-            let makediv=document.createElement("div");
-            let text=document.createTextNode(arr2[i]);
-            makediv.appendChild(text);
-            makediv.title=arr1[i];
-            makediv.className="word_div"
-            document.querySelector("#word>div.display").appendChild(makediv);
+        let lyrics_time=lyrics_txt.map((value)=>{
+            return value.slice(value.indexOf("[")+1,value.indexOf("]"))
+        });
+        let lyrics_text=lyrics_txt.map((value)=>{
+            return value.slice(value.indexOf("]")+1)
+        });
+        let lyrics_div=document.createElement("div");
+        for(let i=0;i<lyrics_time.length;i++){
+            let Lyrics_span=document.createElement("span");
+            Lyrics_span.title=lyrics_time[i];
+            Lyrics_span.appendChild(document.createTextNode(lyrics_text[i]));
+            lyrics_div.appendChild(Lyrics_span);
+            document.getElementById("lyrics_main_div").appendChild(lyrics_div);
         }
     }
-    function rollword(){                                                     //歌词滚动
-        let cut=document.querySelector("#controls_player>audio.display").currentTime;
-        let cuttime=timedata(parseInt(cut/60))+":"+timedata(parseInt(cut%60))
-        let singword=document.querySelector("#word>div.display").childNodes                     
-        let arr=new Array();
-        for(let i=1;i<singword.length;i++){
-            arr.push(singword[i].title);                      
+    function Lyrics_roll(){                                                                 //歌词滚动
+        let lyrics_div=document.getElementById("lyrics_main_div").childNodes[0];
+        let audio=document.querySelector("#songname_audio>div.display").childNodes[0];
+        let cuttime=timedata(parseInt(audio.currentTime/60))+":"+timedata(parseInt(audio.currentTime%60));
+        let arr=new Array();   
+        for(let i=0;i<=lyrics_div.childNodes.length-1;i++){
+            arr.push(lyrics_div.childNodes[i].title);              
         }  
-        if(cuttime<=arr[0]){
-            singword[1].className="on_word";
-            for(let j=1;j<=arr.length;j++){
-                singword[j].className="word_div";
-            }//歌曲重新开始时，后面歌词状态重置
-        }
         for(let i=0;i<=arr.length;i++){
-            if(i<arr.length){
-                if(cuttime>=singword[i].title&&cuttime<=singword[i+1].title){     
-                    singword[i].className="on_word";
+            if(i<arr.length){ 
+                if(cuttime>=arr[i]&&cuttime<=arr[i+1]){  
+                    lyrics_div.childNodes[i].className="singing_lyrics";
                     for(let j=0;j<i;j++){
-                        singword[j].className="no_display"
+                        lyrics_div.childNodes[j].className="no_display"
                     }
-                    for(let k=arr.length;k>i+1;k--){
-                        singword[k].className="word_div"
+                    for(let k=arr.length-1;k>i;k--){
+                        lyrics_div.childNodes[k].className=""
                     }
                 }
             }
-            else if(i>=arr.length&&cuttime>=singword[arr.length].title){
-                singword[arr.length].className="on_word"
-                for(let j=0;j<arr.length;j++){
-                    singword[j].className="no_display"
+            else if(i>=arr.length&&cuttime>=arr[arr.length-1]){
+                lyrics_div.childNodes[arr.length-1].className="singing_lyrics"
+                for(let j=0;j<arr.length-1;j++){
+                    lyrics_div.childNodes[j].className="no_display"
                 }
             }
         }
-    }
-    function showlist(){                                                    //下拉歌曲列表
-        let iflist=document.getElementById("song_list_list");
-        if(iflist.className=='no_display'){
-            iflist.className="song_list_list"
-        }
-        else{
-            iflist.className="no_display"
-        }
-    }
-    function stopplay(){                                                    //停止播放歌曲
-        let song=document.querySelector("#controls_player>audio.display");
-        let playsong=document.querySelector("#list_img_play>img.display");
-        song.pause();
-        if(playsong.src.indexOf("bf.jpg")>0){
-            document.querySelector("#list_img_play>img.no_display").className="display"
-            playsong.className="no_display"
-        }
-        clearInterval(timead);
-    };
-    document.getElementById("list_img_play").addEventListener("click",songplay);
-    document.getElementById("next_song").addEventListener("click",next_song);
-    document.getElementById("last_song").addEventListener("click",last_song);
-    document.getElementById("list_select").addEventListener("click",showlist);
-    document.getElementById("voice").addEventListener("click",no_adjust);
-    document.getElementById("adjust_voice").addEventListener("click",voice_adjust);
-    document.getElementById("time_range").addEventListener("mousemove",line_adjust);
-    document.getElementById("time_range").addEventListener("click",line_adjust);
+    }                      
+    document.getElementById("last_button").addEventListener("click",last_song);
+    document.getElementById("next_button").addEventListener("click",next_song);
+    document.getElementById("play_button_div").addEventListener("click",playbutton);
+    document.getElementById("voice_button").addEventListener("click",visibility_voice_bar);
+    // document.getElementById("voice_range").addEventListener("mousemove",voice_adjust);
+    // document.getElementById("song_range").addEventListener("mousemove",time_adjust);//增加了这个事件监听播放变卡//mousemove操作导致变卡
 </script>
 </html>
